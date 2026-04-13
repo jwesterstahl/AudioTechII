@@ -70,7 +70,7 @@ private:
     int envSamples;
     
     // envelope sample tracker;
-    int envTracker;
+    int envTracker = 0;
     
     void genSineWave(juce::AudioBuffer<float>& buffer);
     void applyEnvRamp(juce::AudioBuffer<float>& buffer);
