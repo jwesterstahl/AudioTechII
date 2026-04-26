@@ -188,7 +188,7 @@ void InClassApr16AudioProcessor::delay(juce::AudioBuffer<float> &buffer)
         float* channelData = buffer.getWritePointer(channel);
         float* delayData = delayBuffer.getWritePointer(channel);
         
-        for (int i = 0; i < bufferSize; ++i)
+        for (int i = 0; i < buffer.getNumSamples(); ++i)
         {
             int writeIndex = (writeTail + i) % delayBufferSize;
             int readIndex = (writeIndex - delayInSamples + delayBufferSize) % delayBufferSize;
