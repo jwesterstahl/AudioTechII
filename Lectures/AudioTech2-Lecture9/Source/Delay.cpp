@@ -2,18 +2,16 @@
   ==============================================================================
 
     Delay.cpp
- 
-    This code contains the implementation needed for a simple feedback delay.
+    Created: 22 Apr 2026 3:54:11pm
+    Author:  Jocelyn
 
   ==============================================================================
 */
 
 #include "Delay.h"
 
-
 void Delay::prepare(double samplingRate, int maxDelay, int numChannels)
 {
-<<<<<<< HEAD
     sampleRate = samplingRate;
 
     delayBufferSize = maxDelay;
@@ -29,46 +27,37 @@ void Delay::prepare(double samplingRate, int maxDelay, int numChannels)
     {
         writeHeads[c] = 0;
     }
-=======
-
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
 void Delay::setMaxDelayInSamples(int maxDelay)
 {
-<<<<<<< HEAD
     maxDelayInSamples = maxDelay;
-=======
-    
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
 int Delay::getMaxDelayInSamples()
 {
-<<<<<<< HEAD
     return maxDelayInSamples;
-=======
-    return 0;
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
-void Delay::setDelayTime(float delaySeconds)
+void Delay::setDelayTime(float delayInSeconds)
 {
-<<<<<<< HEAD
-    smoothDelay.setTargetValue(delaySeconds);
-=======
-    
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
+    smoothDelay.setTargetValue(delayInSeconds);
 }
 
 void Delay::setWetMix(float wetAmount)
 {
-<<<<<<< HEAD
     mix = wetAmount;
-
 }
 
-// this is called in the ProcessBlock as we iterate over each channel's buffer
+void Delay::nextLfoVal()
+{
+    lfo = amp * sinf(phase);
+    phase += juce::MathConstants<float>::twoPi * freq / sampleRate;
+
+    if (phase >= juce::MathConstants<float>::twoPi) {
+        phase -= juce::MathConstants<float>::twoPi;
+    }
+}
 
 float Delay::interpRead(float* delayData, int writeHead, float delaySamples)
 {
@@ -91,10 +80,29 @@ float Delay::processSample(float inputSample, int channel)
     float* delayData = delayBuffer.getWritePointer(channel);
 
     int writeHead = writeHeads[channel];
-    
+
+    if (channel == 0)
+    {
+        nextLfoVal();
+        currDelay = smoothDelay.getNextValue();
+    }
+
+    float modDelay = currDelay + lfo;
+
+    modDelay = std::clamp<float>(modDelay, 0.001f, (delayBufferSize / sampleRate));
+
+    float delaySamples = modDelay * sampleRate;
+
     float delayed = interpRead(delayData, writeHead, delaySamples);
-    
+
+    //delayData[writeHead] = inputSample;
+
+    DBG(delayed);
+
+    // with feedback
     delayData[writeHead] = inputSample + (feedback * delayed);
+
+    // update output as mixed signal
 
     delayed = ((1.0 - mix) * inputSample) + (mix * delayed);
 
@@ -103,13 +111,5 @@ float Delay::processSample(float inputSample, int channel)
     writeHeads[channel] = writeHead;
 
     return delayed;
-=======
-    
-}
 
-// this is called in the ProcessBlock as we iterate over each channel's buffer
-float Delay::processSample(float inputSample, int channel)
-{
-    return 0.;
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }

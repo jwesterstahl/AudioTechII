@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-_2526HW4AudioProcessor::_2526HW4AudioProcessor()
+_2526InClassApr23AudioProcessor::_2526InClassApr23AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -19,41 +19,31 @@ _2526HW4AudioProcessor::_2526HW4AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-<<<<<<< HEAD
                        ),
 #endif
 apvts(*this, nullptr, "Parameters", createParams())
-
-=======
-                       )
-#endif
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 {
 }
 
-_2526HW4AudioProcessor::~_2526HW4AudioProcessor()
+_2526InClassApr23AudioProcessor::~_2526InClassApr23AudioProcessor()
 {
 }
 
-<<<<<<< HEAD
-juce::AudioProcessorValueTreeState::ParameterLayout _2526HW4AudioProcessor::createParams()
+juce::AudioProcessorValueTreeState::ParameterLayout _2526InClassApr23AudioProcessor::createParams()
 {
-    return {
-        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"delay", 1}, "Delay length", 0.0, 5, 0.25),
-        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"mix", 1}, "Dry/Wet Mix", 0.0, 1.0, 0.5)
+    return
+    {
+        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"delay", 1}, "Delay Length", 0.0, 2, 0.25)
     };
-    
 }
 
-=======
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 //==============================================================================
-const juce::String _2526HW4AudioProcessor::getName() const
+const juce::String _2526InClassApr23AudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool _2526HW4AudioProcessor::acceptsMidi() const
+bool _2526InClassApr23AudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -62,7 +52,7 @@ bool _2526HW4AudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool _2526HW4AudioProcessor::producesMidi() const
+bool _2526InClassApr23AudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -71,7 +61,7 @@ bool _2526HW4AudioProcessor::producesMidi() const
    #endif
 }
 
-bool _2526HW4AudioProcessor::isMidiEffect() const
+bool _2526InClassApr23AudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -80,63 +70,60 @@ bool _2526HW4AudioProcessor::isMidiEffect() const
    #endif
 }
 
-double _2526HW4AudioProcessor::getTailLengthSeconds() const
+double _2526InClassApr23AudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int _2526HW4AudioProcessor::getNumPrograms()
+int _2526InClassApr23AudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int _2526HW4AudioProcessor::getCurrentProgram()
+int _2526InClassApr23AudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void _2526HW4AudioProcessor::setCurrentProgram (int index)
+void _2526InClassApr23AudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const juce::String _2526HW4AudioProcessor::getProgramName (int index)
+const juce::String _2526InClassApr23AudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void _2526HW4AudioProcessor::changeProgramName (int index, const juce::String& newName)
+void _2526InClassApr23AudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void _2526HW4AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void _2526InClassApr23AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-<<<<<<< HEAD
+    // Use this method as the place to do any pre-playback
+    // initialisation that you need..
+    
     samplingRate = sampleRate;
-
+    
     bufferSize = samplesPerBlock;
-
+    
     int maxDelay = maxDelaySec * samplingRate;
-
+    
     int numChannels = getTotalNumOutputChannels();
     
-
     delay.prepare(samplingRate, maxDelay, numChannels);
-
-=======
-    // call your initializing functions and set variables here!
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
-void _2526HW4AudioProcessor::releaseResources()
+void _2526InClassApr23AudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool _2526HW4AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool _2526InClassApr23AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     juce::ignoreUnused (layouts);
@@ -161,74 +148,53 @@ bool _2526HW4AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 }
 #endif
 
-void _2526HW4AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void _2526InClassApr23AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
-    
-<<<<<<< HEAD
+
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    int numSamples = buffer.getNumSamples();
-    
     auto* delayParam = apvts.getRawParameterValue("delay");
     auto delayLengthSec = delayParam->load();
+    
+    
     delay.setDelayTime(delayLengthSec);
     
-    auto* mixParam = apvts.getRawParameterValue("mix");
-    auto mix = mixParam->load();
     delay.setWetMix(0.5);
-
     
-=======
-    int numSamples = buffer.getNumSamples();
-
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, numSamples);
-
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        auto* channelData = buffer.getWritePointer (channel);
-
-        for (int i = 0; i < numSamples; ++i)
+        auto* channelData = buffer.getWritePointer(channel);
+        for (int i = 0; i < bufferSize; ++i)
         {
-            // your delay function is called below. Do not change
             channelData[i] = delay.processSample(channelData[i], channel);
         }
     }
 }
 
 //==============================================================================
-bool _2526HW4AudioProcessor::hasEditor() const
+bool _2526InClassApr23AudioProcessor::hasEditor() const
 {
-<<<<<<< HEAD
-    return true; // (change this to false if you choose to not supply an editor)
-=======
     return false; // (change this to false if you choose to not supply an editor)
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
-juce::AudioProcessorEditor* _2526HW4AudioProcessor::createEditor()
+juce::AudioProcessorEditor* _2526InClassApr23AudioProcessor::createEditor()
 {
-<<<<<<< HEAD
-    return new juce::GenericAudioProcessorEditor (*this);
-=======
-    return new _2526HW4AudioProcessorEditor (*this);
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
+    return new _2526InClassApr23AudioProcessorEditor (*this);
 }
 
 //==============================================================================
-void _2526HW4AudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void _2526InClassApr23AudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void _2526HW4AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void _2526InClassApr23AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -238,5 +204,5 @@ void _2526HW4AudioProcessor::setStateInformation (const void* data, int sizeInBy
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new _2526HW4AudioProcessor();
+    return new _2526InClassApr23AudioProcessor();
 }

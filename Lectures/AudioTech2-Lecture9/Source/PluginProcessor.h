@@ -14,12 +14,12 @@
 //==============================================================================
 /**
 */
-class _2526HW4AudioProcessor  : public juce::AudioProcessor
+class AudioTech2Lecture9AudioProcessor  : public juce::AudioProcessor
 {
 public:
     //==============================================================================
-    _2526HW4AudioProcessor();
-    ~_2526HW4AudioProcessor() override;
+    AudioTech2Lecture9AudioProcessor();
+    ~AudioTech2Lecture9AudioProcessor() override;
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -53,31 +53,20 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-<<<<<<< HEAD
-    
+
     juce::AudioProcessorValueTreeState apvts;
 
-    
-=======
-
-
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 private:
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_2526HW4AudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioTech2Lecture9AudioProcessor)
 
     Delay delay;
-<<<<<<< HEAD
-    
+
     double samplingRate;
     int bufferSize;
-    
-    
-    const int maxDelaySec = 5;
-    
+
+    const int maxDelaySec = 2;
+
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
-=======
-    const int maxDelaySec = 5;
-    
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
+
 };

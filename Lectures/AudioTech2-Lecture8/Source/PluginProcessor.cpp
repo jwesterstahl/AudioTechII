@@ -32,7 +32,11 @@ AudioTech2Lecture8AudioProcessor::~AudioTech2Lecture8AudioProcessor()
 juce::AudioProcessorValueTreeState::ParameterLayout AudioTech2Lecture8AudioProcessor::createParams()
 {
     return {
+<<<<<<< HEAD
         std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"delay", 1}, "Delay length", 0.0, 5.0, 0.25)
+=======
+        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"delay", 1}, "Delay length", 0.0, 2, 0.25)
+>>>>>>> 72021cf0060b26fa684c37d351261909e830377f
     };
 }
 
