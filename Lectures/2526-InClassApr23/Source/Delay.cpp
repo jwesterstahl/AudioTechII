@@ -60,6 +60,21 @@ void Delay::nextLfoVal()
     }
 }
 
+float Delay::interpRead(float* delayData, int writeHead, float delaySamples)
+{
+    float readTail = std::fmod((writehead - delaySamples + delayBufferSize), delayBufferSize);
+    if (readTail < 0)
+    {
+        readTail += delayBufferSize;
+    }
+    int before = floor(readTail);
+    int after = (before + 1) % delayBufferSize;
+    
+    float frac = readTail - before;
+    
+    return (delayData[before] * (1 - frac) + (delayData[after] * frac));
+}
+
 float Delay::processSample(float inputSample, int channel)
 {
     float* delayData = delayBuffer.getWritePointer(channel);
@@ -68,13 +83,17 @@ float Delay::processSample(float inputSample, int channel)
     
     nextLfoVal();
     
+    DBG(lfo);
+    
     float modDelay = smoothDelay.getNextValue() + lfo;
     
     delaySamples = modDelay * sampleRate;
     
-    int readTail = (writeHead - delaySamples + delayBufferSize) % delayBufferSize;
+    float delayed =  interpRead(delayData, writeHead, delaySamples);
     
-    float delayed = delayData[readTail];
+    //int readTail = (writeHead - delaySamples + delayBufferSize) % delayBufferSize;
+        
+    //float delayed = delayData[readTail];
     
     delayData[writeHead] = inputSample;
     

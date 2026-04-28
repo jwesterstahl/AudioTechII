@@ -146,6 +146,7 @@ bool _2526InClassApr23AudioProcessor::isBusesLayoutSupported (const BusesLayout&
     return true;
   #endif
 }
+
 #endif
 
 void _2526InClassApr23AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
