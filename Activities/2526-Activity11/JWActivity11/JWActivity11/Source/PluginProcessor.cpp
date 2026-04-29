@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-_2526Activity11AudioProcessor::_2526Activity11AudioProcessor()
+JWActivity11AudioProcessor::JWActivity11AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -19,22 +19,33 @@ _2526Activity11AudioProcessor::_2526Activity11AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
 #endif
+    apvts(*this, nullptr, "Parameters", createParams())
 {
 }
 
-_2526Activity11AudioProcessor::~_2526Activity11AudioProcessor()
+
+juce::AudioProcessorValueTreeState::ParameterLayout JWActivity11AudioProcessor::createParams()
+{
+    return {
+        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"freq", 1}, "Frequency", juce::NormalisableRange<float>(20.0f, 2000.0f, 1.0f, 0.3f), 440.0f),
+        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"amp", 1}, "Amplitude", 0.0f, 1.0f, 0.5f),
+        std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"mute", 1}, "Mute", false)
+    };
+}
+
+JWActivity11AudioProcessor::~JWActivity11AudioProcessor()
 {
 }
 
 //==============================================================================
-const juce::String _2526Activity11AudioProcessor::getName() const
+const juce::String JWActivity11AudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool _2526Activity11AudioProcessor::acceptsMidi() const
+bool JWActivity11AudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -43,7 +54,7 @@ bool _2526Activity11AudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool _2526Activity11AudioProcessor::producesMidi() const
+bool JWActivity11AudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -52,7 +63,7 @@ bool _2526Activity11AudioProcessor::producesMidi() const
    #endif
 }
 
-bool _2526Activity11AudioProcessor::isMidiEffect() const
+bool JWActivity11AudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -61,37 +72,37 @@ bool _2526Activity11AudioProcessor::isMidiEffect() const
    #endif
 }
 
-double _2526Activity11AudioProcessor::getTailLengthSeconds() const
+double JWActivity11AudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int _2526Activity11AudioProcessor::getNumPrograms()
+int JWActivity11AudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int _2526Activity11AudioProcessor::getCurrentProgram()
+int JWActivity11AudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void _2526Activity11AudioProcessor::setCurrentProgram (int index)
+void JWActivity11AudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const juce::String _2526Activity11AudioProcessor::getProgramName (int index)
+const juce::String JWActivity11AudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void _2526Activity11AudioProcessor::changeProgramName (int index, const juce::String& newName)
+void JWActivity11AudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void _2526Activity11AudioProcessor::prepareToPlay (double sampleRate, int numSamplesPerBlock)
+void JWActivity11AudioProcessor::prepareToPlay (double sampleRate, int numSamplesPerBlock)
 {
     // You need to initialize your variables here!
     samplingRate = sampleRate;
@@ -117,14 +128,14 @@ void _2526Activity11AudioProcessor::prepareToPlay (double sampleRate, int numSam
     envTracker = 0;
 }
 
-void _2526Activity11AudioProcessor::releaseResources()
+void JWActivity11AudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool _2526Activity11AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool JWActivity11AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     juce::ignoreUnused (layouts);
@@ -149,7 +160,7 @@ bool _2526Activity11AudioProcessor::isBusesLayoutSupported (const BusesLayout& l
 }
 #endif
 
-void _2526Activity11AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void JWActivity11AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
@@ -168,7 +179,7 @@ void _2526Activity11AudioProcessor::processBlock (juce::AudioBuffer<float>& buff
     applyEnvRamp(buffer);
 }
 
-void _2526Activity11AudioProcessor::genSineWave
+void JWActivity11AudioProcessor::genSineWave
  (juce::AudioBuffer<float>& buffer) {
     
     // Fill the buffer (in place) with a sinusoid
@@ -199,10 +210,9 @@ void _2526Activity11AudioProcessor::genSineWave
 
 
 
-void _2526Activity11AudioProcessor::applyEnvRamp(juce::AudioBuffer<float>& buffer)
+void JWActivity11AudioProcessor::applyEnvRamp(juce::AudioBuffer<float>& buffer)
 {
     // Apply an amplitude envelope to the buffer (in place)
-    // Multiply each sample by an envelope value (0 → 1 → 0)
     // your code goes here!
     
     envSamples = envSec * samplingRate;
@@ -238,25 +248,25 @@ void _2526Activity11AudioProcessor::applyEnvRamp(juce::AudioBuffer<float>& buffe
 }
 
 //==============================================================================
-bool _2526Activity11AudioProcessor::hasEditor() const
+bool JWActivity11AudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* _2526Activity11AudioProcessor::createEditor()
+juce::AudioProcessorEditor* JWActivity11AudioProcessor::createEditor()
 {
-    return new _2526Activity11AudioProcessorEditor (*this);
+    return new JWActivity11AudioProcessorEditor (*this);
 }
 
 //==============================================================================
-void _2526Activity11AudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void JWActivity11AudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
 }
 
-void _2526Activity11AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void JWActivity11AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -266,5 +276,5 @@ void _2526Activity11AudioProcessor::setStateInformation (const void* data, int s
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new _2526Activity11AudioProcessor();
+    return new JWActivity11AudioProcessor();
 }

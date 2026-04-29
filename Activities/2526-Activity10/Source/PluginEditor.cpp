@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-_2526Activity10AudioProcessorEditor::_2526Activity10AudioProcessorEditor (_2526Activity10AudioProcessor& p)
+_2526Activity11AudioProcessorEditor::_2526Activity11AudioProcessorEditor (_2526Activity11AudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     // Make sure that before the constructor has finished, you've set the
@@ -18,12 +18,12 @@ _2526Activity10AudioProcessorEditor::_2526Activity10AudioProcessorEditor (_2526A
     setSize (400, 300);
 }
 
-_2526Activity10AudioProcessorEditor::~_2526Activity10AudioProcessorEditor()
+_2526Activity11AudioProcessorEditor::~_2526Activity11AudioProcessorEditor()
 {
 }
 
 //==============================================================================
-void _2526Activity10AudioProcessorEditor::paint (juce::Graphics& g)
+void _2526Activity11AudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
@@ -33,7 +33,7 @@ void _2526Activity10AudioProcessorEditor::paint (juce::Graphics& g)
     g.drawFittedText ("Activity 10 Enveloped Sine Wave!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
-void _2526Activity10AudioProcessorEditor::resized()
+void _2526Activity11AudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..

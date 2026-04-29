@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="WFFUZT" name="2526-Activity10" projectType="audioplug" useAppConfig="0"
+<JUCERPROJECT id="WFFUZT" name="2526-Activity11" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
-  <MAINGROUP id="RnRJit" name="2526-Activity10">
+  <MAINGROUP id="RnRJit" name="2526-Activity11">
     <GROUP id="{752A1D85-CCD2-58C2-5DEB-4475E5A33C68}" name="Source">
       <FILE id="eA1XKj" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
