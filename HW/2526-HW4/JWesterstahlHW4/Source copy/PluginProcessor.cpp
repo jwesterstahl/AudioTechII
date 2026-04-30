@@ -173,8 +173,8 @@ void _2526HW4AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     delay.setFeedbackAmt(feedback);
 
     auto* mixParam = apvts.getRawParameterValue("mix");
-    auto mix = mixParam->load();
-    delay.setWetMix(mix);
+    //auto mix = mixParam->load();
+    delay.setWetMix(0.5);
 
     
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
