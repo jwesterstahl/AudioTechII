@@ -18,11 +18,7 @@
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-<<<<<<< HEAD
-    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-=======
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
     <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
             useGlobalPath="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -44,21 +40,6 @@
         <CONFIGURATION isDebug="0" name="Release" targetName="2526-HW4"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-<<<<<<< HEAD
-        <MODULEPATH id="juce_audio_basics" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors_headless" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../../../../Downloads/JUCE/modules"/>
-=======
         <MODULEPATH id="juce_audio_basics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../../../JUCE/modules"/>
@@ -72,7 +53,6 @@
         <MODULEPATH id="juce_graphics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../JUCE/modules"/>
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
       </MODULEPATHS>
     </VS2026>
     <XCODE_MAC targetFolder="Builds/MacOSX">
@@ -81,21 +61,6 @@
         <CONFIGURATION isDebug="0" name="Release" targetName="2526-HW4"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-<<<<<<< HEAD
-        <MODULEPATH id="juce_audio_basics" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors_headless" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../../../Downloads/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../../../../Downloads/JUCE/modules"/>
-=======
         <MODULEPATH id="juce_audio_basics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../../../JUCE/modules"/>
@@ -109,7 +74,6 @@
         <MODULEPATH id="juce_graphics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../JUCE/modules"/>
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>

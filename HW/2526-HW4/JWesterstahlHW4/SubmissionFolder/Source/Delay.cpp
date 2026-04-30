@@ -59,6 +59,27 @@ void Delay::setFeedbackAmt(float feedbackAmt)
 }
 
 
+float Delay::interpRead(float* delayData, int writeHead, float delaySamples)
+
+{
+    /*
+    fractional delay implementation
+    */
+
+    float readPos = float(writeHead) - delaySamples;
+    
+    int i0 = int(readPos);
+    int i1 = int(i0 +1) % delayBufferSize;
+    
+    float frac = readPos - float(i0);
+    
+    float samp0 = delayData[i0];
+    float samp1 = delayData[i1];
+    
+    return ((1.0f - frac) * samp0) + (frac * samp1); //"split" the values
+     
+    
+}
 // this is called in the ProcessBlock as we iterate over each channel's buffer
 
 float Delay::processSample(float inputSample, int channel)
@@ -82,26 +103,4 @@ float Delay::processSample(float inputSample, int channel)
     writeHeads[channel] = writeHead;
 
     return delayed;
-    
-    /*
-     
-     float* delayData = delayBuffer.getWritePointer(channel);
-     
-     int writeHead = writeHeads[channel];
-     
-     float delayed = interpRead(delayData, writeHead, delaySamples);
-     
-     delayData[writeHead] = inputSample + (feedback * delayed);
-     
-     delayed = ((1.0 - mix) * inputSample) + (mix * delayed);
-     
-     writeHead = (writeHead + 1) % delayBufferSize;
-     
-     writeHeads[channel] = writeHead;
-     
-     return delayed;
-     */
-    
 }
-// this is called in the ProcessBlock as we iterate over each channel's buffer
-
