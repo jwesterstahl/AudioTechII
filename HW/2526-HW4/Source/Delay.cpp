@@ -13,7 +13,6 @@
 
 void Delay::prepare(double samplingRate, int maxDelay, int numChannels)
 {
-<<<<<<< HEAD
     sampleRate = samplingRate;
 
     delayBufferSize = maxDelay;
@@ -29,71 +28,51 @@ void Delay::prepare(double samplingRate, int maxDelay, int numChannels)
     {
         writeHeads[c] = 0;
     }
-=======
 
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
 void Delay::setMaxDelayInSamples(int maxDelay)
 {
-<<<<<<< HEAD
     maxDelayInSamples = maxDelay;
-=======
     
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
 int Delay::getMaxDelayInSamples()
 {
-<<<<<<< HEAD
     return maxDelayInSamples;
-=======
-    return 0;
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
 void Delay::setDelayTime(float delaySeconds)
 {
-<<<<<<< HEAD
     smoothDelay.setTargetValue(delaySeconds);
-=======
     
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
 void Delay::setWetMix(float wetAmount)
 {
-<<<<<<< HEAD
     mix = wetAmount;
-
 }
+
+void Delay::setFeedbackAmt(float feedbackAmt)
+{
+    feedback = feedbackAmt;
+}
+
 
 // this is called in the ProcessBlock as we iterate over each channel's buffer
 
-float Delay::interpRead(float* delayData, int writeHead, float delaySamples)
-{
-    float readTail = std::fmod((writeHead - delaySamples + delayBufferSize), delayBufferSize);
-    if (readTail < 0)
-    {
-        readTail += delayBufferSize;
-    }
-
-    int before = floor(readTail);
-    int after = (before + 1) % delayBufferSize;
-
-    float frac = readTail - before;
-
-    return (delayData[before] * (1 - frac)) + (delayData[after] * frac);
-}
-
 float Delay::processSample(float inputSample, int channel)
 {
+    delaySamples = (int)(smoothDelay.getNextValue() * sampleRate);
+
     float* delayData = delayBuffer.getWritePointer(channel);
 
     int writeHead = writeHeads[channel];
-    
-    float delayed = interpRead(delayData, writeHead, delaySamples);
-    
+
+    int readTail = (writeHead - delaySamples + delayBufferSize) % delayBufferSize;
+
+    float delayed = delayData[readTail];
+
     delayData[writeHead] = inputSample + (feedback * delayed);
 
     delayed = ((1.0 - mix) * inputSample) + (mix * delayed);
@@ -103,13 +82,26 @@ float Delay::processSample(float inputSample, int channel)
     writeHeads[channel] = writeHead;
 
     return delayed;
-=======
+    
+    /*
+     
+     float* delayData = delayBuffer.getWritePointer(channel);
+     
+     int writeHead = writeHeads[channel];
+     
+     float delayed = interpRead(delayData, writeHead, delaySamples);
+     
+     delayData[writeHead] = inputSample + (feedback * delayed);
+     
+     delayed = ((1.0 - mix) * inputSample) + (mix * delayed);
+     
+     writeHead = (writeHead + 1) % delayBufferSize;
+     
+     writeHeads[channel] = writeHead;
+     
+     return delayed;
+     */
     
 }
-
 // this is called in the ProcessBlock as we iterate over each channel's buffer
-float Delay::processSample(float inputSample, int channel)
-{
-    return 0.;
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
-}
+

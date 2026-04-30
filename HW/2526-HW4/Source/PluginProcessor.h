@@ -53,31 +53,22 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-<<<<<<< HEAD
     
     juce::AudioProcessorValueTreeState apvts;
 
     
-=======
-
-
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (_2526HW4AudioProcessor)
 
     Delay delay;
-<<<<<<< HEAD
     
-    double samplingRate;
+    double samplingRate = 44100.0;
     int bufferSize;
     
     
     const int maxDelaySec = 5;
     
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
-=======
-    const int maxDelaySec = 5;
     
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 };

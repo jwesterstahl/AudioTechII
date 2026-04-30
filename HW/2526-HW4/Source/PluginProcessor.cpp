@@ -19,15 +19,10 @@ _2526HW4AudioProcessor::_2526HW4AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-<<<<<<< HEAD
                        ),
-#endif
-apvts(*this, nullptr, "Parameters", createParams())
 
-=======
-                       )
 #endif
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
+    apvts(*this, nullptr, "Parameters", createParams())
 {
 }
 
@@ -35,18 +30,16 @@ _2526HW4AudioProcessor::~_2526HW4AudioProcessor()
 {
 }
 
-<<<<<<< HEAD
 juce::AudioProcessorValueTreeState::ParameterLayout _2526HW4AudioProcessor::createParams()
 {
     return {
         std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"delay", 1}, "Delay length", 0.0, 5, 0.25),
-        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"mix", 1}, "Dry/Wet Mix", 0.0, 1.0, 0.5)
+        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"mix", 1}, "Dry/Wet Mix", 0.0, 1.0, 0.5),
+        std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"feedback", 1}, "Feedback Amount", 0.0, 1.0, 0.25)
     };
     
 }
 
-=======
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 //==============================================================================
 const juce::String _2526HW4AudioProcessor::getName() const
 {
@@ -112,7 +105,8 @@ void _2526HW4AudioProcessor::changeProgramName (int index, const juce::String& n
 //==============================================================================
 void _2526HW4AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-<<<<<<< HEAD
+    // call your initializing functions and set variables here!
+
     samplingRate = sampleRate;
 
     bufferSize = samplesPerBlock;
@@ -121,12 +115,8 @@ void _2526HW4AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 
     int numChannels = getTotalNumOutputChannels();
     
-
     delay.prepare(samplingRate, maxDelay, numChannels);
 
-=======
-    // call your initializing functions and set variables here!
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
 void _2526HW4AudioProcessor::releaseResources()
@@ -167,28 +157,26 @@ void _2526HW4AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
     
-<<<<<<< HEAD
+
+    int numSamples = buffer.getNumSamples();
+
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    int numSamples = buffer.getNumSamples();
     
     auto* delayParam = apvts.getRawParameterValue("delay");
     auto delayLengthSec = delayParam->load();
     delay.setDelayTime(delayLengthSec);
     
+    auto feedbackParam = apvts.getRawParameterValue("feedback");
+    auto feedback = feedbackParam->load();
+    delay.setFeedbackAmt(feedback);
+
     auto* mixParam = apvts.getRawParameterValue("mix");
-    auto mix = mixParam->load();
+    //auto mix = mixParam->load();
     delay.setWetMix(0.5);
 
     
-=======
-    int numSamples = buffer.getNumSamples();
-
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, numSamples);
-
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
@@ -204,20 +192,13 @@ void _2526HW4AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 //==============================================================================
 bool _2526HW4AudioProcessor::hasEditor() const
 {
-<<<<<<< HEAD
     return true; // (change this to false if you choose to not supply an editor)
-=======
-    return false; // (change this to false if you choose to not supply an editor)
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
+
 }
 
 juce::AudioProcessorEditor* _2526HW4AudioProcessor::createEditor()
 {
-<<<<<<< HEAD
     return new juce::GenericAudioProcessorEditor (*this);
-=======
-    return new _2526HW4AudioProcessorEditor (*this);
->>>>>>> 72021cf0060b26fa684c37d351261909e830377f
 }
 
 //==============================================================================
